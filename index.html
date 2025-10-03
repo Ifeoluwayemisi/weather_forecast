@@ -11,29 +11,19 @@
 
   <title>Frontend Mentor | Weather app</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="preload" href="./assets//fonts//Bricolage_Grotesque/" as="font" type="Bricolage_Grotesque" crossorigin>
+  <link rel="preload" href="./assets//fonts//Bricolage_Grotesque/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf"
+    as="font" type="Bricolage_Grotesque" crossorigin>
 
   <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution {
-      font-size: 11px;
-      text-align: center;
-    }
-
-    .attribution a {
-      color: hsl(228, 45%, 44%);
-    }
-  </style>
 </head>
 
 <body>
   <header class="header">
     <div class="logo">
-      <img src="./assets//images//logo.svg" alt="Weather Logo">
-      <span>Weather Now</span>
+      <img src="./assets//images/logo.svg" alt="Weather Logo">
     </div>
     <div class="units">
-      <button class="units-btn">Units 🔻</button>
+      <button class="units-btn"><img src="/assets/images/icon-units.svg" alt="">Units <img src="/assets/images/icon-dropdown.svg" alt=""></button>
       <div class="units-dropdown">
         <div class="dropdown-section">
           <p>Temperature</p>
@@ -61,7 +51,7 @@
 
     <!--search bar-->
     <div class="search-bar">
-      <input type="text" placeholder="Serach for a place..." id="search-input">
+      <img src="/assets/images/icon-search.svg" alt=""><input type="text" placeholder="Search for a place..." id="search-input">
       <button id="search-btn">Search</button>
     </div>
 
@@ -74,70 +64,114 @@
 
       <div class="temperature">
         <img src="./assets/images/icon-sunny.webp" alt="Sunny Icon" class="weather-icon">
-        <span class="temp-value">20&#176;</span>
+       <i><span class="temp-value">20&#176;</span></i>
       </div>
     </section>
 
     <!--Extra metrics-->
     <section class="metrics">
-      <div class="metric"><p>Fells Like</p><span>18&deg;</span></div>
-      <div class="metric"><p>Humidity</p><span>46%</span></div>
-      <div class="metric"><p>Wind</p><span>14 km/h</span></div>
-      <div class="metric"><p>Precipitation</p> <span>0 mm</span></div>
+      <div class="metric">
+        <p>Fells Like</p><span>18&deg;</span>
+      </div>
+      <div class="metric">
+        <p>Humidity</p><span>46%</span>
+      </div>
+      <div class="metric">
+        <p>Wind</p><span>14 km/h</span>
+      </div>
+      <div class="metric">
+        <p>Precipitation</p> <span>0 mm</span>
+      </div>
     </section>
 
     <section class="daily-forecast">
       <h3>Daily forecast</h3>
+      <div class="forecast-grid">
+        <div class="day">
+          <p>Tue</p>
+          <img src="./assets/images/icon-rain.webp" alt="Cloudy">
+          <div class="flex">
+            <p>20&deg;</p>
+            <p>14&deg;</p>
+          </div>
+        </div>
+        <!--other day-->
+        <div class="day">
+          <p>Wed</p>
+          <img src="./assets/images/icon-drizzle.webp" alt="Cloudy">
+          <div class="flex">
+            <p>21&deg;</p>
+            <p>15&deg;</p>
+          </div>
+        </div>
+        <div class="day">
+          <p>Thu</p>
+          <img src="./assets/images/icon-sunny.webp" alt="Cloudy">
+          <div class="flex">
+            <p>24&deg;</p>
+            <p>14&deg;</p>
+          </div>
+        </div>
+        <div class="day">
+          <p>Fri</p>
+          <img src="./assets/images/icon-partly-cloudy.webp" alt="Cloudy">
+          <div class="flex">
+            <p>25&deg;</p>
+            <p>13&deg;</p>
+          </div>
+        </div>
+        <div class="day">
+          <p>Sat</p>
+          <img src="./assets/images/icon-storm.webp" alt="Cloudy">
+          <div class="flex">
+            <p>21&deg;</p>
+            <p>15&deg;</p>
+          </div>
+        </div>
+        <div class="day">
+          <p>Sun</p>
+          <img src="./assets/images/icon-snow.webp" alt="Cloudy">
+          <div class="flex">
+            <p>25&deg;</p>
+            <p>16&deg;</p>
+          </div>
+        </div>
+        <div class="day">
+          <p>Mon</p>
+          <img src="./assets/images/icon-fog.webp" alt="Cloudy">
+          <div class="flex">
+            <p>25&deg;</p>
+            <p>15&deg;</p>
+          </div>
+        </div>
+      </div>
     </section>
-    
+
+    <!--hourly forecast-->
+    <section class="hourly-forcast">
+      <h3>Hourly Forecast</h3>
+      <div class="hourly-grid">
+        <div class="hour">
+          <span>3 PM</span>
+          <img src="/assets/images/icon-partly-cloudy.webp" alt="Cloudy">
+          <span>20&deg;</span>
+        </div>
+        <!--other hour-->
+      </div>
+    </section>
+
   </main>
 
-  Units
+  <footer>
+    <div class="attribution">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. Coded by
+      <a href="https://olayoderacheal.netlify.app/">Chelle Studio</a>
+    </div>
+  </footer>
 
-  Switch to Imperial/Metric
 
-  Temperature
-
-  Celsius (°C)
-  Fahrenheit (°F)
-
-  Wind Speed
-
-  km/h
-  mph
-
-  Precipitation
-
-  Millimeters (mm)
-  Inches (in)
-
-  How's the sky looking today?
-
-  Search for a city, e.g., New York
-  Search
-
-  Feels like
-  <!-- Insert temperature here -->
-
-  Humidity
-  <!-- Insert humidity here -->
-
-  Wind
-  <!-- Insert wind here -->
-
-  Precipitation
-  <!-- Insert precipitation here -->
-
-  Daily forecast
-  <!-- Insert daily forecast for the next 7 days here -->
-
-  Hourly forecast
-  <!-- Insert hourly forecast for the selected day here -->
-
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
-    Coded by <a href="#">Your Name Here</a>.
-  </div>
+  <!--js-->
+  <script src="script.js"></script>
 </body>
 
 </html>
