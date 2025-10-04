@@ -96,6 +96,41 @@ body {
   background: #393d5c;
 }
 
+.units {
+  position: relative;
+  display: inline-block;
+}
+
+.units-dropdown {
+  display: none; /* hide by default */
+  position: absolute;
+  top: 100%; /* below the button */
+  left: 0;
+  background: #3c3b5d;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 10;
+}
+
+.units-dropdown.active {
+  display: block; /* show when active */
+}
+
+.units-dropdown button {
+  display: block;
+  margin: 0.5rem 0;
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+}
+.units-dropdown button:hover {
+  background: #575776;
+  border-radius: 6px;
+}
 /* ===== Main =====*/
 .main {
   max-width: 1000px;
@@ -244,6 +279,21 @@ body {
   margin-bottom: 1rem;
   font-size: 1.2rem;
   font-weight: 600;
+}
+
+.daily-forecast .day {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.daily-forecast .day:hover {
+  transform: scale(1.05);
+}
+
+.daily-forecast .day.active {
+  border: 2px solid #fff;
+  border-radius: 8px;
+  background-color: rgba(255,255,255,0.1);
 }
 
 .forecast-grid {
