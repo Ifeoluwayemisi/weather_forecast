@@ -66,7 +66,7 @@ Users should be able to:
 - Managing state in vanilla JS for selected units and last searched location
 
 ```html
-<h1>Some HTML code I'm proud of</h1>
+<h1>Some js code I'm proud of</h1>
 ```
 ```js
 tempValue.textContent = `${Math.round(cw.temperature)}°`;
