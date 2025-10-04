@@ -23,7 +23,8 @@
       <img src="./assets//images/logo.svg" alt="Weather Logo">
     </div>
     <div class="units">
-      <button class="units-btn"><img src="/assets/images/icon-units.svg" alt="">Units <img src="/assets/images/icon-dropdown.svg" alt=""></button>
+      <button class="units-btn"><img src="/assets/images/icon-units.svg" alt="">Units <img
+          src="/assets/images/icon-dropdown.svg" alt=""></button>
       <div class="units-dropdown">
         <div class="dropdown-section">
           <p>Temperature</p>
@@ -51,115 +52,192 @@
 
     <!--search bar-->
     <div class="search-bar">
-      <img src="/assets/images/icon-search.svg" alt=""><input type="text" placeholder="Search for a place..." id="search-input">
+    <input type="text" placeholder="Search for a place..."
+        id="search-input">
       <button id="search-btn">Search</button>
     </div>
 
     <!--current weather card-->
-    <section class="current-weather">
-      <div class="location">
-        <h2>Berlin, Germany</h2>
-        <p>Tuesday, Aug 5, 2025</p>
+    <div class="main-content">
+      <div class="left">
+        <section class="current-weather">
+          <div class="location">
+            <h2>Berlin, Germany</h2>
+            <p>Tuesday, Aug 5, 2025</p>
+          </div>
+
+          <div class="temperature">
+            <img src="./assets/images/icon-sunny.webp" alt="Sunny Icon" class="weather-icon">
+            <i><span class="temp-value">20&#176;</span></i>
+          </div>
+        </section>
+
+        <!--Extra metrics-->
+        <section class="metrics">
+          <div class="metric">
+            <p>Feels Like</p><span>18&deg;</span>
+          </div>
+          <div class="metric">
+            <p>Humidity</p><span>46%</span>
+          </div>
+          <div class="metric">
+            <p class="pp">Wind</p><span class="ps">14 km/h</span>
+          </div>
+          <div class="metric">
+            <p>Precipitation</p><span>0 mm</span>
+          </div>
+        </section>
+
+        <section class="daily-forecast">
+          <h3>Daily forecast</h3>
+          <div class="forecast-grid">
+            <div class="day">
+              <p>Tue</p>
+              <img src="./assets/images/icon-rain.webp" alt="Cloudy">
+              <div class="flex">
+                <p>20&deg;</p>
+                <p>14&deg;</p>
+              </div>
+            </div>
+            <!--other day-->
+            <div class="day">
+              <p>Wed</p>
+              <img src="./assets/images/icon-drizzle.webp" alt="Cloudy">
+              <div class="flex">
+                <p>21&deg;</p>
+                <p>15&deg;</p>
+              </div>
+            </div>
+            <div class="day">
+              <p>Thu</p>
+              <img src="./assets/images/icon-sunny.webp" alt="Cloudy">
+              <div class="flex">
+                <p>24&deg;</p>
+                <p>14&deg;</p>
+              </div>
+            </div>
+            <div class="day">
+              <p>Fri</p>
+              <img src="./assets/images/icon-partly-cloudy.webp" alt="Cloudy">
+              <div class="flex">
+                <p>25&deg;</p>
+                <p>13&deg;</p>
+              </div>
+            </div>
+            <div class="day">
+              <p>Sat</p>
+              <img src="./assets/images/icon-storm.webp" alt="Cloudy">
+              <div class="flex">
+                <p>21&deg;</p>
+                <p>15&deg;</p>
+              </div>
+            </div>
+            <div class="day">
+              <p>Sun</p>
+              <img src="./assets/images/icon-snow.webp" alt="Cloudy">
+              <div class="flex">
+                <p>25&deg;</p>
+                <p>16&deg;</p>
+              </div>
+            </div>
+            <div class="day">
+              <p>Mon</p>
+              <img src="./assets/images/icon-fog.webp" alt="Cloudy">
+              <div class="flex">
+                <p>25&deg;</p>
+                <p>15&deg;</p>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
 
-      <div class="temperature">
-        <img src="./assets/images/icon-sunny.webp" alt="Sunny Icon" class="weather-icon">
-       <i><span class="temp-value">20&#176;</span></i>
-      </div>
-    </section>
+      <!--hourly forecast-->
+      <div class="right">
+        <section class="hourly-forecast">
+          <div class="flex-h">
+            <h3>Hourly Forecast</h3>
+            <select>
+              <option>Tuesday</option>
+              <option>Wednesday</option>
+              <option>Thursday</option>
+              <option>Friday</option>
+              <option>Saturday</option>
+              <option>Sunday</option>
+              <option>Monday</option>
+            </select>
+          </div>
 
-    <!--Extra metrics-->
-    <section class="metrics">
-      <div class="metric">
-        <p>Fells Like</p><span>18&deg;</span>
-      </div>
-      <div class="metric">
-        <p>Humidity</p><span>46%</span>
-      </div>
-      <div class="metric">
-        <p>Wind</p><span>14 km/h</span>
-      </div>
-      <div class="metric">
-        <p>Precipitation</p> <span>0 mm</span>
-      </div>
-    </section>
+          <div class="hourly-list">
+            <div class="hour">
+              <div class="hr">
+                <img class="image" src="/assets/images/icon-overcast.webp" alt="Cloudy">
+                <p>3 PM</p>
+              </div>
+              <p>20&deg;</p>
+            </div>
 
-    <section class="daily-forecast">
-      <h3>Daily forecast</h3>
-      <div class="forecast-grid">
-        <div class="day">
-          <p>Tue</p>
-          <img src="./assets/images/icon-rain.webp" alt="Cloudy">
-          <div class="flex">
-            <p>20&deg;</p>
-            <p>14&deg;</p>
-          </div>
-        </div>
-        <!--other day-->
-        <div class="day">
-          <p>Wed</p>
-          <img src="./assets/images/icon-drizzle.webp" alt="Cloudy">
-          <div class="flex">
-            <p>21&deg;</p>
-            <p>15&deg;</p>
-          </div>
-        </div>
-        <div class="day">
-          <p>Thu</p>
-          <img src="./assets/images/icon-sunny.webp" alt="Cloudy">
-          <div class="flex">
-            <p>24&deg;</p>
-            <p>14&deg;</p>
-          </div>
-        </div>
-        <div class="day">
-          <p>Fri</p>
-          <img src="./assets/images/icon-partly-cloudy.webp" alt="Cloudy">
-          <div class="flex">
-            <p>25&deg;</p>
-            <p>13&deg;</p>
-          </div>
-        </div>
-        <div class="day">
-          <p>Sat</p>
-          <img src="./assets/images/icon-storm.webp" alt="Cloudy">
-          <div class="flex">
-            <p>21&deg;</p>
-            <p>15&deg;</p>
-          </div>
-        </div>
-        <div class="day">
-          <p>Sun</p>
-          <img src="./assets/images/icon-snow.webp" alt="Cloudy">
-          <div class="flex">
-            <p>25&deg;</p>
-            <p>16&deg;</p>
-          </div>
-        </div>
-        <div class="day">
-          <p>Mon</p>
-          <img src="./assets/images/icon-fog.webp" alt="Cloudy">
-          <div class="flex">
-            <p>25&deg;</p>
-            <p>15&deg;</p>
-          </div>
-        </div>
-      </div>
-    </section>
+            <div class="hour">
+              <div class="hr">
+                <img class="image" src="/assets/images/icon-partly-cloudy.webp" alt="Cloudy">
+                <p>4 PM</p>
+              </div>
+              <p>20&deg;</p>
+            </div>
 
-    <!--hourly forecast-->
-    <section class="hourly-forcast">
-      <h3>Hourly Forecast</h3>
-      <div class="hourly-grid">
-        <div class="hour">
-          <span>3 PM</span>
-          <img src="/assets/images/icon-partly-cloudy.webp" alt="Cloudy">
-          <span>20&deg;</span>
-        </div>
-        <!--other hour-->
-      </div>
-    </section>
+            <div class="hour">
+              <div class="hr">
+                <img class="image" src="/assets/images/icon-sunny.webp" alt="Cloudy">
+                <p>5 PM</p>
+              </div>
+              <p>20&deg;</p>
+            </div>
 
+            <div class="hour">
+              <div class="hr">
+                <img class="image" src="/assets/images/icon-overcast.webp" alt="Cloudy">
+                <p>6 PM</p>
+              </div>
+              <p>19&deg;</p>
+            </div>
+
+            <div class="hour">
+              <div class="hr">
+                <img class="image" src="/assets/images/icon-snow.webp" alt="Cloudy">
+                <p>7 PM</p>
+              </div>
+              <p>18&deg;</p>
+            </div>
+
+            <div class="hour">
+              <div class="hr">
+                <img class="image" src="/assets/images/icon-fog.webp" alt="Cloudy">
+                <p>8 PM</p>
+              </div>
+              <p>18&deg;</p>
+            </div>
+
+            <div class="hour">
+              <div class="hr">
+                <img class="image" src="/assets/images/icon-snow.webp" alt="Cloudy">
+                <p>9 PM</p>
+              </div>
+              <p>17&deg;</p>
+            </div>
+
+            <div class="hour">
+              <div class="hr">
+                <img class="image" src="/assets/images/icon-overcast.webp" alt="Cloudy">
+                <p>10 PM</p>
+              </div>
+              <p>17&deg;</p>
+            </div>
+
+            <!-- repeat -->
+          </div>
+        </section>
+      </div>
+    </div>
   </main>
 
   <footer>
