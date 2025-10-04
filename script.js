@@ -189,42 +189,22 @@ function displayWeather(data, location) {
   highlightDay(data.daily.time[0]);
 
   // ---- Metrics ----
-  let hourIndex = -1;
+  let hourIndex = 0;
   if (data.hourly && data.hourly.time) {
-    hourIndex = data.hourly.time.indexOf(cw.time);
+    const currentTime = new Date(cw.time).getTime();
+    hourIndex = data.hourly.time.findIndex((t) => new Date(t).getTime() >= currentTime);
+    if (hourIndex === -1) hourIndex = 0;
   }
 
-  const feels =
-    hourIndex >= 0 && data.hourly.apparent_temperature
-      ? data.hourly.apparent_temperature[hourIndex]
-      : null;
-  const feelsEl = feelsLikeSpan();
-  if (feelsEl) feelsEl.textContent = feels !== null ? `${round(feels)}°` : "—";
+  const feels = data.hourly.apparent_temperature?.[hourIndex];
+  const hum = data.hourly.relativehumidity_2m?.[hourIndex];
+  const wind = cw.windspeed;
+  const precip = data.hourly.precipitation?.[hourIndex];
 
-  const hum =
-    hourIndex >= 0 && data.hourly.relativehumidity_2m
-      ? data.hourly.relativehumidity_2m[hourIndex]
-      : null;
-  const humEl = humiditySpan();
-  if (humEl) humEl.textContent = hum !== null ? `${round(hum)}%` : "—";
-
-  const windEl = windSpan();
-  if (windEl)
-    windEl.textContent =
-      cw.windspeed !== undefined
-        ? `${round(cw.windspeed)} ${selectedUnits.wind}`
-        : "—";
-
-  const precip =
-    hourIndex >= 0 && data.hourly.precipitation
-      ? data.hourly.precipitation[hourIndex]
-      : null;
-  const precipEl = precipSpan();
-  if (precipEl)
-    precipEl.textContent =
-      precip !== null
-        ? `${precip} ${selectedUnits.precipitation === "in" ? "in" : "mm"}`
-        : "—";
+  feelsLikeSpan()?.textContent = feels !== undefined ? `${round(feels)}°` : "—";
+  humiditySpan()?.textContent = hum !== undefined ? `${round(hum)}%` : "—";
+  windSpan()?.textContent = wind !== undefined ? `${round(wind)} ${selectedUnits.wind}` : "—";
+  precipSpan()?.textContent = precip !== undefined ? `${precip} ${selectedUnits.precipitation === "in" ? "in" : "mm"}` : "—";
 
   cachedWeather = data;
 }
@@ -317,6 +297,28 @@ async function doSearch(query) {
   }
 }
 
+// ---------------- Default Nigeria load ----------------
+async function loadDefaultLocation() {
+  showLoading();
+  try {
+    const results = await getCoordinates("Abuja, Nigeria");
+    const best = results[0];
+    lastLocation = {
+      name: best.name,
+      country: best.country,
+      lat: best.latitude,
+      lon: best.longitude,
+    };
+
+    const weather = await getWeather(best.latitude, best.longitude);
+    displayWeather(weather, lastLocation);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    hideLoading();
+  }
+}
+
 // ---------------- Events ----------------
 searchBtn.addEventListener("click", () => doSearch(searchInput.value));
 searchInput.addEventListener("keydown", (e) => {
@@ -383,3 +385,11 @@ unitOptions.forEach((opt) => {
     }
   });
 });
+
+// ---------------- Initialize default ----------------
+// ---------------- Initialize default ----------------
+document.addEventListener("DOMContentLoaded", () => {
+  doSearch("Nigeria");
+});
+
+
