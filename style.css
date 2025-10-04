@@ -104,18 +104,32 @@ body {
 .units-dropdown {
   display: none; /* hide by default */
   position: absolute;
-  top: 100%; /* below the button */
+  top: 100%;
   left: 0;
-  background: #3c3b5d;
-  padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  background-color: #2c2b4a;
+  border-radius: 8px;
+  padding: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform: translateY(-10px);
+  opacity: 0;
   z-index: 10;
 }
 
 .units-dropdown.active {
-  display: block; /* show when active */
+  display: block;
+  transform: translateY(0);
+  opacity: 1;
 }
+
+.units-btn img:last-child {
+  transition: transform 0.2s ease;
+}
+
+.units-btn.active img:last-child {
+  transform: rotate(180deg); /* arrow rotates when open */
+}
+
 
 .units-dropdown button {
   display: block;

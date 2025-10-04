@@ -1,5 +1,3 @@
-// script.js - drop into your project root and include via <script src="script.js"></script>
-
 // ---------------- DOM refs ----------------
 const searchBtn = document.getElementById("search-btn");
 const searchInput = document.getElementById("search-input");
@@ -66,6 +64,7 @@ function formatDateFromISO(isoStr) {
     return isoStr;
   }
 }
+
 function round(v) {
   return Math.round(Number(v));
 }
@@ -73,6 +72,7 @@ function round(v) {
 function showLoading() {
   if (spinner) spinner.classList.remove("hidden");
 }
+
 function hideLoading() {
   if (spinner) spinner.classList.add("hidden");
 }
@@ -157,23 +157,20 @@ function displayWeather(data, location) {
       const date = new Date(dateStr);
       const weekday = date.toLocaleDateString("en-US", { weekday: "long" });
 
-      for (let block = 0; block < 24; block += 6) {
-        const option = document.createElement("option");
-        option.value = `${dateStr}-${block}`; // e.g. "2025-10-04-0"
-        option.textContent = `${weekday} ${block}:00 - ${block + 6}:00`;
-        if (i === 0 && block === 0) option.selected = true;
-        select.appendChild(option);
-      }
+      const option = document.createElement("option");
+      option.value = dateStr;
+      option.textContent = weekday;
+      if (i === 0) option.selected = true;
+      select.appendChild(option);
     });
 
-    // initial render: first 6hr chunk of today
-    const [firstDate] = data.daily.time;
-    renderHourly(data, `${firstDate}-0`);
+    // initial render: today
+    renderHourly(data, data.daily.time[0]);
 
     // dropdown listener
     select.addEventListener("change", (e) => {
       renderHourly(data, e.target.value);
-      highlightDay(e.target.value.split("-")[0]); // highlight base day
+      highlightDay(e.target.value);
     });
   }
 
@@ -182,8 +179,8 @@ function displayWeather(data, location) {
   dayEls.forEach((dayEl) => {
     dayEl.addEventListener("click", () => {
       const selectedDate = dayEl.dataset.date;
-      renderHourly(data, `${selectedDate}-0`); // default to 0–6 chunk
-      if (select) select.value = `${selectedDate}-0`;
+      renderHourly(data, selectedDate);
+      if (select) select.value = selectedDate;
       highlightDay(selectedDate);
     });
   });
@@ -233,40 +230,66 @@ function displayWeather(data, location) {
 }
 
 // ---------------- Hourly rendering ----------------
-function renderHourly(data, selectedChunk) {
-  const hourlyList = document.querySelector(".hourly-list");
-  if (!hourlyList || !data.hourly) return;
+function renderHourly(data, selectedDate) {
+  const container = document.querySelector(".hourly-list");
+  if (!container || !data.hourly) return;
 
-  hourlyList.innerHTML = "";
+  container.innerHTML = "";
 
-  const [dateStr, blockStr] = selectedChunk.split("-");
-  const blockStart = parseInt(blockStr, 10);
-  const blockEnd = blockStart + 6;
+  const dayHours = data.hourly.time
+    .map((time, i) => ({
+      time,
+      temp: data.hourly.temperature_2m[i],
+      code: data.hourly.weathercode[i],
+    }))
+    .filter((h) => h.time.startsWith(selectedDate));
 
-  data.hourly.time.forEach((t, i) => {
-    if (!t.startsWith(dateStr)) return;
-    const timeObj = new Date(t);
-    const hour = timeObj.getHours();
-    if (hour < blockStart || hour >= blockEnd) return;
+  if (dayHours.length === 0) {
+    container.innerHTML = "<p>No hourly data</p>";
+    return;
+  }
 
-    const hourLabel = timeObj.toLocaleTimeString("en-US", {
-      hour: "numeric",
-      hour12: true,
+  const chunks = [];
+  for (let i = 0; i < dayHours.length; i += 6) {
+    chunks.push(dayHours.slice(i, i + 6));
+  }
+
+  let currentPage = 0;
+
+  function renderPage(page) {
+    container.innerHTML = "";
+    chunks[page].forEach((h) => {
+      const hourEl = document.createElement("div");
+      hourEl.className = "hour";
+      hourEl.innerHTML = `
+        <div class="hr">
+          <img class="image" src="${getWeatherIcon(h.code)}" alt="Weather Icon">
+          <p>${new Date(h.time).getHours()}:00</p>
+        </div>
+        <p>${Math.round(h.temp)}°</p>
+      `;
+      container.appendChild(hourEl);
     });
-    const temp = Math.round(data.hourly.temperature_2m[i]);
-    const icon = getWeatherIcon(data.hourly.weathercode[i]);
 
-    const hourEl = document.createElement("div");
-    hourEl.classList.add("hour");
-    hourEl.innerHTML = `
-      <div class="hr">
-        <img class="image" src="${icon}" alt="Weather Icon">
-        <p>${hourLabel}</p>
-      </div>
-      <p>${temp}°</p>
-    `;
-    hourlyList.appendChild(hourEl);
-  });
+    const controls = document.createElement("div");
+    controls.className = "pagination";
+
+    const prev = document.createElement("button");
+    prev.textContent = "Prev 6h";
+    prev.disabled = page === 0;
+    prev.addEventListener("click", () => renderPage(page - 1));
+
+    const next = document.createElement("button");
+    next.textContent = "Next 6h";
+    next.disabled = page === chunks.length - 1;
+    next.addEventListener("click", () => renderPage(page + 1));
+
+    controls.appendChild(prev);
+    controls.appendChild(next);
+    container.appendChild(controls);
+  }
+
+  renderPage(currentPage);
 }
 
 // ---------------- Main search flow ----------------
@@ -303,29 +326,40 @@ searchInput.addEventListener("keydown", (e) => {
 unitsBtn.addEventListener("click", (e) => {
   e.stopPropagation();
   unitsDropdown.classList.toggle("active");
+  unitsBtn.classList.toggle("active");
 });
 document.addEventListener("click", (e) => {
   if (!e.target.closest(".units")) {
     unitsDropdown.classList.remove("active");
+    unitsBtn.classList.remove("active");
+  }
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    unitsDropdown.classList.remove("active");
+    unitsBtn.classList.remove("active");
   }
 });
 
 function highlightDay(selectedDate) {
   const dayEls = document.querySelectorAll(".daily-forecast .day");
   dayEls.forEach((dayEl) => {
-    if (dayEl.dataset.date === selectedDate) {
-      dayEl.classList.add("active");
-    } else {
-      dayEl.classList.remove("active");
-    }
+    dayEl.classList.toggle("active", dayEl.dataset.date === selectedDate);
   });
 }
 
+// ---------------- Units dropdown ----------------
 unitOptions.forEach((opt) => {
-  opt.addEventListener("click", () => {
+  opt.addEventListener("click", async () => {
     const type = opt.dataset.type;
     const unit = opt.dataset.unit;
     selectedUnits[type] = unit;
+
+    const parentSection = opt.closest(".dropdown-section");
+    parentSection
+      .querySelectorAll("button")
+      .forEach((b) => b.classList.remove("active"));
+    opt.classList.add("active");
 
     unitsBtn.innerHTML = `
       <img src="/assets/images/icon-units.svg" alt=""> 
@@ -333,9 +367,19 @@ unitOptions.forEach((opt) => {
       <img src="/assets/images/icon-dropdown.svg" alt="">
     `;
     unitsDropdown.classList.remove("active");
+    unitsBtn.classList.remove("active");
 
-    if (cachedWeather && lastLocation) {
-      displayWeather(cachedWeather, lastLocation);
+    if (lastLocation) {
+      showLoading();
+      try {
+        const weather = await getWeather(lastLocation.lat, lastLocation.lon);
+        displayWeather(weather, lastLocation);
+      } catch (err) {
+        console.error(err);
+        alert("Failed to fetch weather with new units.");
+      } finally {
+        hideLoading();
+      }
     }
   });
 });
