@@ -42,8 +42,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [https://chelle-weather-forecast.netlify.app/](https://chelle-weather-forecast.netlify.app/)
-- Live Site URL: [https://github.com/Ifeoluwayemisi/weather_forecast](https://github.com/Ifeoluwayemisi/weather_forecast)
+- Solution URL: [https://github.com/Ifeoluwayemisi/weather_forecast](https://github.com/Ifeoluwayemisi/weather_forecast)
+- Live Site URL: [https://chelle-weather-forecast.netlify.app/](https://chelle-weather-forecast.netlify.app/)
 
 ## My process
 
